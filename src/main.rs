@@ -5,11 +5,13 @@ use std::io::{BufRead, BufReader};
 
 mod agavra;
 mod codec;
+mod hachikuji;
 mod naive;
 mod zstd;
 
 use agavra::AgavraCodec;
 use codec::EventCodec;
+use hachikuji::HachikujiCodec;
 use naive::NaiveCodec;
 use zstd::ZstdCodec;
 
@@ -158,6 +160,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         (Box::new(ZstdCodec::new(9)), &events),
         // (Box::new(ZstdCodec::new(22)), &events), // commented out b/c it takes long to run
         (Box::new(AgavraCodec::new()), &sorted_events),
+        (Box::new(HachikujiCodec::new()), &sorted_events),
     ];
 
     for (codec, expected) in codecs {
