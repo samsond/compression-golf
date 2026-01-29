@@ -103,6 +103,39 @@ fn print_row(name: &str, size: usize, baseline: usize) {
     );
 }
 
+fn assert_events_eq(
+    name: &str,
+    expected: &[(EventKey, EventValue)],
+    actual: &[(EventKey, EventValue)],
+) {
+    assert_eq!(
+        expected.len(),
+        actual.len(),
+        "{}: length mismatch (expected {}, got {})",
+        name,
+        expected.len(),
+        actual.len()
+    );
+    let mismatches: Vec<_> = expected
+        .iter()
+        .zip(actual.iter())
+        .enumerate()
+        .filter(|(_, (a, b))| a != b)
+        .take(3)
+        .collect();
+    assert!(
+        mismatches.is_empty(),
+        "{}: {} mismatches, first at index {}",
+        name,
+        expected
+            .iter()
+            .zip(actual.iter())
+            .filter(|(a, b)| a != b)
+            .count(),
+        mismatches[0].0
+    );
+}
+
 fn main() -> Result<(), Box<dyn Error>> {
     let path = "data.json";
     let events = load_events(path)?;
@@ -130,7 +163,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         let encoded = codec.encode(&events)?;
         print_row(codec.name(), encoded.len(), baseline);
         let decoded = codec.decode(&encoded)?;
-        assert_eq!(expected, &decoded);
+        assert_events_eq(codec.name(), expected, &decoded);
     }
 
     println!("└────────────────────────┴────────────┴────────────┘");
