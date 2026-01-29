@@ -2,14 +2,14 @@
 
 **Can you beat 12.01 MB?**
 
-A compression challenge: encode 11,351 GitHub events into the smallest possible binary format.
+A compression challenge: encode 1,000,000 GitHub events into the smallest possible binary format.
 
 ## Leaderboard
 
 | Rank | Who                                | Size      |
 |------|------------------------------------|-----------|
 | 1    | *[Zstd(22)](src/zstd.rs)*          | 12.01 MB  |
-| 2    | [agavra](src/agavra.rs)            | 15.30 MB  |
+| 2    | [agavra](src/agavra.rs)            | 13.03 MB  |
 | 3    | [Zstd(9)](src/zstd.rs)             | 17.04 MB  |
 |      | *[Naive (baseline)](src/naive.rs)* | 200.97 MB |
 
