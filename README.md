@@ -4,7 +4,13 @@
 
 A compression challenge: encode 1,000,000 GitHub events into the smallest possible binary format.
 
-## Leaderboard
+## Leaderboards
+
+There are **two leaderboards** for this challenge:
+
+### Training Dataset Leaderboard
+
+This leaderboard uses the `data.json.gz` dataset included in the repo. Use this to develop and test your codec.
 
 | Rank | Who                                | Size (Bytes) |
 |------|------------------------------------|--------------|
@@ -12,6 +18,14 @@ A compression challenge: encode 1,000,000 GitHub events into the smallest possib
 | 2    | *[Zstd(22)](src/zstd.rs)*          | 11,917,798   |
 | 3    | *[Zstd(9)](src/zstd.rs)*           | 17,869,403   |
 |      | *[Naive (baseline)](src/naive.rs)* | 210,727,389  |
+
+### Evaluation Dataset Leaderboard
+
+To prevent overfitting to the training data, a separate **evaluation dataset** will be announced on **March 1st, 2025** when the challenge ends. All submitted codecs will be run against this hidden dataset.
+
+**Two winners will be announced:**
+1. Best compression on the **training dataset**
+2. Best compression on the **evaluation dataset**
 
 *[Submit a PR](https://github.com/agavra/compression-golf/pulls) to claim your spot!*
 
@@ -129,6 +143,7 @@ let codecs: Vec<(Box<dyn EventCodec>, &[(EventKey, EventValue)])> = vec![
 - No external data or pretrained models
 - Must compile with stable Rust
 - Decode must produce byte-identical output to sorted input
+- **Submission deadline: March 1st, 2025** — evaluation dataset revealed and winners announced
 
 ## Resources
 
