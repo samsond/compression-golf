@@ -248,13 +248,11 @@ fn group_events(events: &[(EventKey, EventValue)]) -> Vec<RepoGroup> {
             repo_name: repo_name.to_string(),
         };
 
-        let group = repo_map.entry(repo_key).or_insert_with(|| {
-            RepoGroup {
-                repo_id,
-                user: user.to_string(),
-                repo_name: repo_name.to_string(),
-                events_by_type: BTreeMap::new(),
-            }
+        let group = repo_map.entry(repo_key).or_insert_with(|| RepoGroup {
+            repo_id,
+            user: user.to_string(),
+            repo_name: repo_name.to_string(),
+            events_by_type: BTreeMap::new(),
         });
 
         group
@@ -286,7 +284,6 @@ impl HachikujiCodec {
         Self
     }
 }
-
 
 impl EventCodec for HachikujiCodec {
     fn name(&self) -> &str {
@@ -427,4 +424,3 @@ impl EventCodec for HachikujiCodec {
         Ok(events)
     }
 }
-

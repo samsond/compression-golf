@@ -137,9 +137,27 @@ fn assert_events_eq(
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let path = std::env::args()
-        .nth(1)
-        .unwrap_or_else(|| "data.json".to_string());
+    let args: Vec<String> = std::env::args().collect();
+
+    let mut path = "data.json".to_string();
+    let mut codec_filter: Option<String> = None;
+
+    let mut i = 1;
+    while i < args.len() {
+        match args[i].as_str() {
+            "--codec" => {
+                if i + 1 < args.len() {
+                    codec_filter = Some(args[i + 1].to_lowercase());
+                    i += 1;
+                }
+            }
+            arg if !arg.starts_with('-') => {
+                path = arg.to_string();
+            }
+            _ => {}
+        }
+        i += 1;
+    }
     let events = load_events(&path)?;
     println!("Loaded {} events from {}\n", events.len(), path);
 
@@ -164,6 +182,14 @@ fn main() -> Result<(), Box<dyn Error>> {
     ];
 
     for (codec, expected) in codecs {
+        // Skip if filter is set and doesn't match (always run Naive for baseline)
+        if let Some(ref filter) = codec_filter {
+            let name_lower = codec.name().to_lowercase();
+            if !name_lower.contains(filter) && !name_lower.contains("naive") {
+                continue;
+            }
+        }
+
         let encoded = codec.encode(&events)?;
         print_row(codec.name(), encoded.len(), baseline);
         let decoded = codec.decode(&encoded)?;
