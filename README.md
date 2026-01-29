@@ -16,7 +16,8 @@ This leaderboard uses the `data.json.gz` dataset included in the repo. Use this 
 |------|------------------------------------|--------------|
 | 1    | [agavra](src/agavra.rs)            | 9,407,052    |
 | 2    | *[Zstd(22)](src/zstd.rs)*          | 11,917,798   |
-| 3    | *[Zstd(9)](src/zstd.rs)*           | 17,869,403   |
+| 3    | [hachikuji](src/hachikuji.rs)      | 14,053,719   |
+| 4    | *[Zstd(9)](src/zstd.rs)*           | 17,869,403   |
 |      | *[Naive (baseline)](src/naive.rs)* | 210,727,389  |
 
 ### Evaluation Dataset Leaderboard
